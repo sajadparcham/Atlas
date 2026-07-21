@@ -278,21 +278,6 @@ Future architectural changes are proposed through RFCs before implementation.
 
 ---
 
-# Project Structure
-
-```text
-Atlas/
-
-├── atlas/
-├── sdk/
-├── docs/
-│   └── rfcs/
-├── tests/
-├── examples/
-├── assets/
-├── README.md
-└── pyproject.toml
-```
 
 ---
 
@@ -427,7 +412,7 @@ Please read **CONTRIBUTING.md** before opening an Issue or Pull Request.
 
 # License
 
-MIT License
+Apache-2.0 license
 
 ---
 
