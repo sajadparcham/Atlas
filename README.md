@@ -1,10 +1,10 @@
+# Atlas
+
 <p align="center">
   <img src="./assets/logo.png" width="140" alt="Atlas Logo">
 </p>
 
-<h1 align="center">
-Atlas
-</h1>
+<h1 align="center">Atlas</h1>
 
 <p align="center">
 <b>The Control Plane for AI Model Decisions.</b>
@@ -17,7 +17,6 @@ Start building AI products.
 
 <p align="center">
 
-
 <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square">
 
 <img src="https://img.shields.io/badge/Status-Pre--Alpha-orange?style=flat-square">
@@ -25,6 +24,8 @@ Start building AI products.
 <img src="https://img.shields.io/github/stars/KingGester/Atlas?style=flat-square">
 
 <img src="https://img.shields.io/github/issues/KingGester/Atlas?style=flat-square">
+
+<img src="https://img.shields.io/github/license/KingGester/Atlas?style=flat-square">
 
 </p>
 
@@ -36,30 +37,34 @@ Start building AI products.
 
 ---
 
-# Why Atlas?
+# The Problem
 
-Modern AI applications are quietly becoming AI platforms.
+Building an AI product shouldn't require building an AI platform.
 
-Every engineering team eventually rebuilds the same infrastructure:
+Yet every engineering team eventually rebuilds the same infrastructure.
 
-- Model Routing
-- Provider Abstraction
-- Retry & Fallback
-- Policy Enforcement
-- Cost Control
-- Tracing
-- Evaluation
-- Governance
+* Model Routing
+* Provider Abstraction
+* Retry & Fallback
+* Policy Enforcement
+* Cost Control
+* Observability
+* Evaluation
+* Governance
 
-Instead of shipping AI products...
+Different companies.
 
-engineering teams spend months building AI infrastructure.
+Different codebases.
+
+The same infrastructure.
+
+Engineering teams spend months rebuilding operational AI infrastructure instead of shipping products.
 
 Atlas exists to standardize this layer.
 
 ---
 
-# Vision
+# What is Atlas?
 
 Atlas is **not another model wrapper.**
 
@@ -67,24 +72,57 @@ Atlas is **not another AI framework.**
 
 Atlas is **not another agent library.**
 
-Atlas is the **Control Plane for AI Model Decisions.**
+Atlas is an **AI Control Plane**.
 
-Atlas enables engineering teams to control how models are selected, executed, evaluated and governed—without building an internal AI platform from scratch.
+Atlas standardizes model routing, provider abstraction, policy enforcement, execution reliability and operational control through a single programmable control plane.
+
+Instead of forcing every company to build an internal AI platform, Atlas provides the missing infrastructure layer.
+
+---
+
+# Vision
+
+Modern software has operating systems.
+
+Cloud computing has Kubernetes.
+
+Microservices have service meshes.
+
+AI applications need a control plane.
+
+Atlas aims to become the operational layer that sits between AI applications and model providers.
 
 ---
 
 # What Atlas Solves
 
-| Problem | Atlas |
-|----------|:------:|
-| Provider Lock-in | ✅ |
-| Manual Model Routing | ✅ |
-| Provider Abstraction | ✅ |
-| Policy Enforcement | ✅ |
-| Retry & Fallback | ✅ |
-| Cost Control | ✅ |
-| Routing Observability | ✅ |
-| Unified API | ✅ |
+| Problem               | Atlas |
+| --------------------- | :---: |
+| Provider Lock-in      |   ✅   |
+| Manual Model Routing  |   ✅   |
+| Provider Abstraction  |   ✅   |
+| Policy Enforcement    |   ✅   |
+| Retry & Fallback      |   ✅   |
+| Cost Control          |   ✅   |
+| Routing Observability |   ✅   |
+| Unified API           |   ✅   |
+
+---
+
+# Why Atlas?
+
+Most existing tools solve only one piece of the problem.
+
+| Tool       | Primary Focus         |
+| ---------- | --------------------- |
+| OpenAI SDK | Single Provider       |
+| LiteLLM    | Provider Abstraction  |
+| OpenRouter | Unified API Gateway   |
+| LangGraph  | Agent Workflow        |
+| CrewAI     | Multi-Agent Framework |
+| Atlas      | AI Control Plane      |
+
+Atlas is designed to orchestrate operational decisions across providers instead of becoming another framework.
 
 ---
 
@@ -98,22 +136,72 @@ Atlas enables engineering teams to control how models are selected, executed, ev
                               │
                               ▼
                         Atlas Core
-        ┌────────────────────────────────┐
-        │                                │
-        │      Policy Engine             │
-        │      Router                    │
-        │      Tracing                   │
-        │      Metrics                   │
-        │                                │
-        └────────────────────────────────┘
+        ┌──────────────────────────────────────────┐
+        │                                          │
+        │  Policy Engine                           │
+        │  Router                                  │
+        │  Tracing                                 │
+        │  Metrics                                 │
+        │  Execution Context                       │
+        │                                          │
+        └──────────────────────────────────────────┘
                               │
                               ▼
                      Provider Adapter
                               │
-      ┌───────────┬───────────┬───────────┬───────────┐
-      ▼           ▼           ▼           ▼
-   OpenAI     Anthropic     Gemini     Ollama
+      ┌───────────┬────────────┬────────────┬────────────┐
+      ▼           ▼            ▼            ▼
+   OpenAI     Anthropic      Gemini      Ollama
 ```
+
+---
+
+# Design Principles
+
+Atlas follows several core engineering principles.
+
+* Interface First
+* Provider Agnostic
+* Single Responsibility
+* Explicit Ownership
+* Deterministic Execution
+* Reliability over Cleverness
+* Replaceable Components
+* RFC-driven Architecture
+
+---
+
+# Request Lifecycle
+
+```text
+Application
+      │
+      ▼
+Atlas SDK
+      │
+      ▼
+Atlas Core
+      │
+      ▼
+Policy Engine
+      │
+      ▼
+Router
+      │
+      ▼
+Provider Adapter
+      │
+      ▼
+Model Provider
+      │
+      ▼
+Normalized Response
+      │
+      ▼
+Application
+```
+
+Every request follows the same deterministic lifecycle.
 
 ---
 
@@ -137,100 +225,186 @@ response = client.chat(
 print(response.text)
 ```
 
+Future migration from existing SDKs should require little more than changing the import and the endpoint.
+
 ---
 
 # Core Principles
 
-Atlas is designed around three principles.
+## Quality
 
-### Quality
-
-Always choose the best model for the workload.
+Choose the best model for the workload.
 
 ---
 
-### Cost
+## Cost
 
 Optimize successful outcomes instead of token usage.
 
 ---
 
-### Reliability
+## Reliability
 
-Production-first architecture with predictable behavior.
+Production-first architecture with predictable execution.
+
+---
+
+## Observability
+
+Every routing decision should be explainable.
+
+---
+
+## Extensibility
+
+Every major subsystem should be replaceable.
+
+---
+
+# RFC Driven Development
+
+Atlas follows an RFC-based engineering process.
+
+Current RFCs:
+
+| RFC      | Description       |
+| -------- | ----------------- |
+| RFC-0001 | Product Vision    |
+| RFC-0002 | Request Lifecycle |
+| RFC-0003 | Core Interfaces   |
+| RFC-0004 | Core Data Model   |
+
+Future architectural changes are proposed through RFCs before implementation.
+
+---
+
+# Project Structure
+
+```text
+Atlas/
+
+├── atlas/
+├── sdk/
+├── docs/
+│   └── rfcs/
+├── tests/
+├── examples/
+├── assets/
+├── README.md
+└── pyproject.toml
+```
+
+---
+
+# Current Milestone
+
+## Atlas Alpha
+
+### Completed
+
+* ✅ Market Research
+* ✅ Product Vision
+* ✅ Architecture Design
+* ✅ RFC-0001
+* ✅ RFC-0002
+* ✅ RFC-0003
+* ✅ RFC-0004
+* ✅ SDK Architecture
+
+### In Progress
+
+* ⏳ Core Models
+* ⏳ Atlas Core
+* ⏳ Provider Interface
+* ⏳ Mock Provider
+* ⏳ Static Router
+
+### Upcoming
+
+* Virtual Models
+* Provider Abstraction
+* OpenAI Adapter
+* Policy Engine
+* Routing Engine
 
 ---
 
 # Roadmap
 
-## Phase 1
+## Phase 1 — Foundation
 
-- [x] Market Research
-- [x] Product Vision
-- [x] RFC-0001
-- [X] RFC-0002 Architecture
-- [X] RFC-0003 Interfaces
-
----
-
-## Phase 2
-
-- [ ] Virtual Models
-- [ ] Provider Abstraction
-- [ ] Policy Engine
-- [ ] Router
+* RFCs
+* Core Architecture
+* SDK
+* Core Data Model
 
 ---
 
-## Phase 3
+## Phase 2 — Alpha
 
-- [ ] Tracing
-- [ ] Metrics
-- [ ] Cost Policies
-- [ ] Reliability
-
----
-
-## Phase 4
-
-- [ ] Smart Routing
-- [ ] Evaluation
-- [ ] Model Registry
-- [ ] Stable Public API
+* Virtual Models
+* Provider Abstraction
+* OpenAI Adapter
+* Static Router
+* Mock Provider
 
 ---
 
-# Why not...
+## Phase 3 — Production Foundation
 
-| Tool | Primary Focus |
-|------|---------------|
-| LiteLLM | Provider abstraction |
-| LangGraph | Agent workflow |
-| OpenAI SDK | Single provider |
-| OpenRouter | Unified API |
-| Atlas | AI Control Plane |
+* Policy Engine
+* Retry & Fallback
+* Tracing
+* Metrics
+* Reliability
+* Cost Policies
 
 ---
 
-# Philosophy
+## Phase 4 — Intelligence
 
-Atlas is built on one simple idea.
+* Smart Routing
+* Evaluation Engine
+* Routing Analytics
+* Model Registry
+* Learned Routing
 
-> AI engineers should build AI products.
+---
 
-> They shouldn't spend months rebuilding the same AI infrastructure.
+## Phase 5 — Enterprise
+
+* Governance
+* Multi-Tenant Policies
+* Audit Trail
+* Budget Enforcement
+* Enterprise APIs
 
 ---
 
 # Current Status
 
-Atlas is currently in **Pre-Alpha**.
+Atlas is under active development.
 
-The project is in the architecture and design phase.
+Current focus:
 
-The public API is **not stable** yet.
+* Building the core execution pipeline.
+* Establishing stable interfaces.
+* Creating a production-ready SDK.
+* Preparing the first Alpha release.
 
-Feedback, RFC discussions and architecture proposals are welcome.
+The public API is **not yet stable**.
+
+Breaking changes are expected before v1.0.
+
+---
+
+# Philosophy
+
+Atlas is built around one simple belief.
+
+> AI engineers should build AI products.
+
+> They should not spend months rebuilding the same operational AI infrastructure.
 
 ---
 
@@ -240,11 +414,12 @@ Atlas is being built in public.
 
 We welcome:
 
-- RFC proposals
-- Bug reports
-- Feature discussions
-- Documentation improvements
-- Architecture reviews
+* RFC proposals
+* Architecture reviews
+* Bug reports
+* Documentation improvements
+* Feature discussions
+* Pull Requests
 
 Please read **CONTRIBUTING.md** before opening an Issue or Pull Request.
 
@@ -253,6 +428,12 @@ Please read **CONTRIBUTING.md** before opening an Issue or Pull Request.
 # License
 
 MIT License
+
+---
+
+# Acknowledgements
+
+Atlas is inspired by the engineering practices behind modern infrastructure projects such as Kubernetes, Envoy, Terraform and other cloud-native systems, while focusing on the operational challenges unique to AI applications.
 
 ---
 
