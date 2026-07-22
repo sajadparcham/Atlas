@@ -424,6 +424,6 @@ Atlas is inspired by the engineering practices behind modern infrastructure proj
 
 <p align="center">
 
-Built with ❤️ for the AI Engineering community.
+Built with ❤️ for the AI Engineering community and thank you.
 
 </p>
